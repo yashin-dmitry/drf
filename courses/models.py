@@ -1,9 +1,13 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class Course(models.Model):
     name = models.CharField(max_length=255)
-    preview = models.ImageField(upload_to='course_previews/')
+    preview = models.ImageField(upload_to='previews/')
     description = models.TextField()
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='courses')
 
     def __str__(self):
         return self.name
@@ -11,9 +15,10 @@ class Course(models.Model):
 class Lesson(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    preview = models.ImageField(upload_to='lesson_previews/')
+    preview = models.ImageField(upload_to='previews/')
     video_url = models.URLField()
-    course = models.ForeignKey(Course, related_name='lessons', on_delete=models.CASCADE)
+    course = models.ForeignKey('courses.Course', on_delete=models.CASCADE, related_name='lessons')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lessons')
 
     def __str__(self):
         return self.name
