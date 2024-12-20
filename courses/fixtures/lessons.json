@@ -1,0 +1,13 @@
+[
+    {
+        "model": "courses.lesson",
+        "pk": 1,
+        "fields": {
+            "name": "Sample Lesson",
+            "description": "This is a sample lesson.",
+            "preview": "path/to/preview.jpg",
+            "video_url": "https://example.com/video.mp4",
+            "course": 1
+        }
+    }
+]

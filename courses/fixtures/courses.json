@@ -1,0 +1,11 @@
+[
+    {
+        "model": "courses.course",
+        "pk": 1,
+        "fields": {
+            "name": "Sample Course",
+            "preview": "path/to/preview.jpg",
+            "description": "This is a sample course."
+        }
+    }
+]

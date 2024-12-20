@@ -1,0 +1,21 @@
+[
+    {
+        "model": "users.customuser",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$180000$qmFcQiMzGQlF$aXAQYsLjZbXVZzWxYzZaZbXcZdEfGhIjKlMnOpQrStUvWxYz",
+            "last_login": null,
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "admin@example.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2023-10-01T12:00:00Z",
+            "phone": "",
+            "city": "",
+            "avatar": ""
+        }
+    }
+]
