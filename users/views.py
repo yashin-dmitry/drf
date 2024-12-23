@@ -1,6 +1,7 @@
 from rest_framework import generics, permissions, viewsets, filters
 from .models import CustomUser, Payment
-from .serializers import CustomUserSerializer, RegisterSerializer, PaymentSerializer
+from .serializers import (CustomUserSerializer, RegisterSerializer,
+                          PaymentSerializer)
 from .permissions import IsModerator, IsOwner
 
 class RegisterView(generics.CreateAPIView):

@@ -6,12 +6,14 @@ from .models import CustomUser, Payment
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['id', 'email', 'first_name', 'last_name', 'phone', 'city', 'avatar']
+        fields = ['id', 'email', 'first_name', 'last_name', 'phone',
+                  'city', 'avatar']
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['email', 'password', 'first_name', 'last_name', 'phone', 'city', 'avatar']
+        fields = ['email', 'password', 'first_name', 'last_name', 'phone',
+                  'city', 'avatar']
         extra_kwargs = {
             'password': {'write_only': True}
         }

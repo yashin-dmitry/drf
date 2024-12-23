@@ -1,14 +1,10 @@
 from rest_framework import serializers
-from .models import Course, Lesson, Subscription
-from .validators import validate_youtube_url
+from .models import Course, Lesson, Subscription, Payment
 
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = '__all__'
-        extra_kwargs = {
-            'video_url': {'validators': [validate_youtube_url]}
-        }
 
 class CourseSerializer(serializers.ModelSerializer):
     lessons_count = serializers.SerializerMethodField()
@@ -25,3 +21,8 @@ class CourseSerializer(serializers.ModelSerializer):
     def get_is_subscribed(self, obj):
         user = self.context['request'].user
         return Subscription.objects.filter(user=user, course=obj).exists()
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = '__all__'

@@ -21,10 +21,13 @@ class Payment(models.Model):
 
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
-    course = models.ForeignKey('courses.Course', on_delete=models.CASCADE, null=True, blank=True)
-    lesson = models.ForeignKey('courses.Lesson', on_delete=models.CASCADE, null=True, blank=True)
+    course = models.ForeignKey('courses.Course', on_delete=models.CASCADE,
+                               null=True, blank=True)
+    lesson = models.ForeignKey('courses.Lesson', on_delete=models.CASCADE,
+                               null=True, blank=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS)
 
     def __str__(self):
-        return f"Payment by {self.user} for {self.course if self.course else self.lesson} on {self.date}"
+        return f"Payment by {self.user} for {self.course if self.course 
+        else self.lesson} on {self.date}"

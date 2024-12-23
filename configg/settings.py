@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'courses',
     'users',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -91,16 +92,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttribute'
+                'SimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLength'
+                'Validator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPassword'
+                'Validator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPassword'
+                'Validator',
     },
 ]
 
@@ -153,3 +158,8 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
+
+STRIPE_SECRET_KEY = ('sk_test_51QZJW7K9NfGMQqGXdzXOQ1ECcBTrEBNFCgWUX0K2pGEGBgg'
+                     'CktE4rzs5BJ8lfAxDjZTWY98A9FaXu027whG9MYG700M4B5Gs3F')
+STRIPE_PUBLIC_KEY = ('pk_test_51QZJW7K9NfGMQqGXRei8QYDVLKKGQtgN1AzGg7reecl5RsrZ'
+                     'D1EQYNMxFNZMP7Y3JAYNvDdHF0tANsRdWljwQVY300T6O8WzVI')
