@@ -10,6 +10,7 @@ from .services import (create_stripe_product, create_stripe_price,
                        create_stripe_session)
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from .tasks import send_course_update_email
 
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
@@ -47,6 +48,11 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        update_message = f"Курс '{instance.name}' был обновлен."
+        send_course_update_email.delay(instance.id, update_message)
 
 class LessonListCreateView(generics.ListCreateAPIView):
     queryset = Lesson.objects.all()

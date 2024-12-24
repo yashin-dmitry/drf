@@ -29,5 +29,5 @@ class Payment(models.Model):
     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHODS)
 
     def __str__(self):
-        return f"Payment by {self.user} for {self.course if self.course 
-        else self.lesson} on {self.date}"
+        return (f"Payment by {self.user} for "
+                f"{self.course if self.course else self.lesson} on {self.date}")

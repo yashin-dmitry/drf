@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+from dotenv import load_dotenv
+
+# Загрузите переменные окружения из файла .env
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-79ckk16gjx%(@haspdo)cimsj(4qhnp*l1y(er6cpp7vu$o=5t'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-79ckk16gjx%(@haspdo)cimsj(4qhnp*l1y(er6cpp7vu$o=5t')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,6 +47,7 @@ INSTALLED_APPS = [
     'courses',
     'users',
     'drf_yasg',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -79,11 +86,11 @@ WSGI_APPLICATION = 'configg.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'drf',
-        'USER': 'postgres',
-        'PASSWORD': 'tdpro777',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME', 'drf'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'tdpro777'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
@@ -92,20 +99,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttribute'
-                'SimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLength'
-                'Validator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPassword'
-                'Validator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPassword'
-                'Validator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -159,7 +162,22 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
-STRIPE_SECRET_KEY = ('sk_test_51QZJW7K9NfGMQqGXdzXOQ1ECcBTrEBNFCgWUX0K2pGEGBgg'
-                     'CktE4rzs5BJ8lfAxDjZTWY98A9FaXu027whG9MYG700M4B5Gs3F')
-STRIPE_PUBLIC_KEY = ('pk_test_51QZJW7K9NfGMQqGXRei8QYDVLKKGQtgN1AzGg7reecl5RsrZ'
-                     'D1EQYNMxFNZMP7Y3JAYNvDdHF0tANsRdWljwQVY300T6O8WzVI')
+# Stripe settings
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', 'sk_test_51QZJW7K9NfGMQqGXdzXOQ1ECcBTrEBNFCgWUX0K2pGEGBggCktE4rzs5BJ8lfAxDjZTWY98A9FaXu027whG9MYG700M4B5Gs3F')
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', 'pk_test_51QZJW7K9NfGMQqGXRei8QYDVLKKGQtgN1AzGg7reecl5RsrZD1EQYNMxFNZMP7Y3JAYNvDdHF0tANsRdWljwQVY300T6O8WzVI')
+
+# Celery settings
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://localhost:6379/0')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+# Celery Beat settings
+CELERY_BEAT_SCHEDULE = {
+    'add-every-30-seconds': {
+        'task': 'your_app.tasks.add',
+        'schedule': 30.0,
+    },
+}
