@@ -180,4 +180,8 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'your_app.tasks.add',
         'schedule': 30.0,
     },
+    'check-inactive-users-every-day': {
+        'task': 'courses.tasks.check_inactive_users',
+        'schedule': timedelta(days=1),
+    },
 }
