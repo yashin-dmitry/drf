@@ -15,6 +15,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    env_file:
+      - .env
 
   db:
     image: postgres:16.0
@@ -35,7 +37,7 @@ services:
 
   celery:
     build: .
-    command: celery -A configg worker --loglevel=info
+    command: celery -A drfclone2 worker --loglevel=info
     volumes:
       - .:/code
     env_file:
@@ -46,7 +48,7 @@ services:
 
   celery-beat:
     build: .
-    command: celery -A configg beat --loglevel=info
+    command: celery -A drfclone2 beat --loglevel=info
     volumes:
       - .:/code
     env_file:
